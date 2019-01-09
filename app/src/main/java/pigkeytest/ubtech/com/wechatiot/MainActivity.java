@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.tencent.wechat.Cloud;
+import com.ubtech.messageparser.DataContent;
+import com.ubtech.messageparser.MessageParser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     String TAG="MainActivity";
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                         "  \"device_type\": \"gh_6064295bfad2\",\n" +
                         "  \"device_id\": \"gh_6064295bfad2_d11fafd815c759ba\",\n" +
                         "  \"msg_type\": \"notify\",\n" +
+                        "  \"data\":\"hello world\",\n" +
                         "  \"services\": {\n" +
                         "    \"operation_status\": {\n" +
                         "      \"status\": 1\n" +
@@ -46,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"deviceID is "+Cloud.getDeviceId());
         Log.d(TAG,"SDK VERSION IS "+Cloud.getSDKVersion());
 
-
-
-
+       String testJson="{\"msg_id\":668377127,\"msg_type\":\"set\",\"services\":{\"operation_status\":{\"status\":1}},\"user\":\"oYd-ytwz-EYkcXPb1mo4DmCKaUBw\",\"test_create_time\":1547018303576,\"data\":\"� v \u0003\"}";
+       String content=MessageParser.INSTANCE.parseMessage(testJson).getData();
+       System.out.println(new String(content));
     }
+
+    
 }

@@ -3,6 +3,8 @@ package com.tencent.wechat;
 
 import android.util.Log;
 
+import com.ubtech.messageparser.MessageParser;
+
 public class Cloud {
 
 	private static final String LOG_TAG = "Cloud";
@@ -88,6 +90,8 @@ public class Cloud {
 	public static void onResponseCallback(int taskid, int errcode, int funcid, byte[] data) {
 		Log.d(LOG_TAG, "Receive resp:" + taskid + ", errcode:" + errcode + ", funcid:" + funcid);
 		String dataString = new String(data);
+		MessageParser.INSTANCE.parseMessage(dataString);
+		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length);
 		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length);
 	}
 	
