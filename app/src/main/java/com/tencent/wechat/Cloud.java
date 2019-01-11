@@ -3,7 +3,10 @@ package com.tencent.wechat;
 
 import android.util.Log;
 
+import com.ubtech.messageparser.MessageEventBus;
 import com.ubtech.messageparser.MessageParser;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class Cloud {
 
@@ -90,9 +93,7 @@ public class Cloud {
 	public static void onResponseCallback(int taskid, int errcode, int funcid, byte[] data) {
 		Log.d(LOG_TAG, "Receive resp:" + taskid + ", errcode:" + errcode + ", funcid:" + funcid);
 		String dataString = new String(data);
-		MessageParser.INSTANCE.parseMessage(dataString);
-		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length);
-		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length);
+
 	}
 	
 	/*
@@ -106,7 +107,13 @@ public class Cloud {
 	public static void onNotifyCallback(int funcid, byte[] data) {
 		Log.d(LOG_TAG, "Receive push notify funcid:" + funcid);
 		String dataString = new String(data);
-		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length);
+		String ttscontent=MessageParser.INSTANCE.parseMessage(dataString).getData();
+		int msg_id=MessageParser.INSTANCE.parseMessage(dataString).getMsg_id();
+
+		MessageEventBus.INSTANCE.setMessageContent(ttscontent);
+		MessageEventBus.INSTANCE.setMessageId(msg_id);
+		EventBus.getDefault().post(MessageEventBus.INSTANCE);
+		Log.d(LOG_TAG, "Data:" + dataString + ", Data len:" + data.length+"tts content"+ttscontent+"msg_id"+msg_id);
 	}
 	
 	/*

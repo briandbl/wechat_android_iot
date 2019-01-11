@@ -7,6 +7,8 @@ package com.ubtech.messageparser
  */
 class DataContent{
     var data:String=""
+    var msg_id:Int=-1
+    var msg_type:String=""
     var services:String=""
     var user:String=""
     var device_type:String=""
